@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 // compatibility layer, while still allowing the script to run from any local
 // checkout when GITHUB_WORKSPACE is absent.
 const root = process.env.GITHUB_WORKSPACE || fileURLToPath(new URL("..", import.meta.url));
-const required = ["LICENSE", "App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
+const required = ["LICENSE", "App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "src/solana.ts", "src/solana.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
 for (const relative of required) {
   const path = join(root, relative);
   readFileSync(path, "utf8");
@@ -15,6 +15,7 @@ for (const relative of required) {
 const app = readFileSync(join(root, "App.tsx"), "utf8");
 const entry = readFileSync(join(root, "index.js"), "utf8");
 const billing = readFileSync(join(root, "src/billing.ts"), "utf8");
+const solana = readFileSync(join(root, "src/solana.ts"), "utf8");
 const manifest = JSON.parse(readFileSync(join(root, "app.json"), "utf8"));
 const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const draft = readFileSync(join(root, "docs/SHIPATON-SUBMISSION-DRAFT.md"), "utf8");
@@ -40,6 +41,7 @@ const checks = [
   [app.includes("TRACKED POTENTIAL") && app.includes("not payment confirmation"), "honest potential label"],
   [billing.includes("react-native-purchases"), "RevenueCat module"],
   [billing.includes("resolveRevenueCatModule") && billing.includes("default"), "RevenueCat module export compatibility"],
+  [solana.includes("devnet") && solana.includes("duplicate-claim") && solana.includes("private keys"), "devnet-only reward guard"],
   [draft.includes("not an entry") && draft.includes("production RevenueCat products") && draft.includes("student eligibility is not assumed"), "honest submission gates"],
   [emergent.includes("Deployment alone does not count") && emergent.includes("No bots"), "contest integrity gates"],
   [prompt.includes("not a guarantee of payment") && prompt.includes("Do not invent"), "builder prompt integrity"],

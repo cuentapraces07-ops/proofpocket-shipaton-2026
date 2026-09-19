@@ -37,6 +37,8 @@ allows it, and shown with the network and transaction status.
 ## Current status
 
 The existing ProofPocket build has RevenueCat Test Store billing, an Android
-bundle workflow and a public demo, but it has **no Solana SDK, wallet adapter,
-SKR contract or devnet transaction**. Those missing pieces are deliberate; no
-claim of CLOCK IN eligibility has been made.
+bundle workflow and a public demo. It now also has a dependency-free,
+devnet-only reward-claim guard with a deterministic mock provider and tests;
+this is **not** a Solana SDK, wallet adapter, SKR contract or devnet
+transaction. Those missing pieces are deliberate; no claim of CLOCK IN
+eligibility has been made.

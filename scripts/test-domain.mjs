@@ -19,6 +19,8 @@ try {
     tscPath,
     "src/domain.ts",
     "src/domain.test.ts",
+    "src/solana.ts",
+    "src/solana.test.ts",
     "--target",
     "ES2022",
     "--module",
@@ -27,7 +29,7 @@ try {
     output,
     "--skipLibCheck",
   ]);
-  run(process.execPath, ["--test", join(output, "domain.test.js")]);
+  run(process.execPath, ["--test", join(output, "domain.test.js"), join(output, "solana.test.js")]);
 } finally {
   rmSync(output, { recursive: true, force: true });
 }

@@ -6,7 +6,10 @@
   "scripts": {
     "start": "expo start",
     "typecheck": "tsc --noEmit",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "test:domain": "node scripts/test-domain.mjs",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
   },
   "dependencies": {
     "expo": "~54.0.0",

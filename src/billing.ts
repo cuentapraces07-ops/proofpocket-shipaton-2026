@@ -9,6 +9,23 @@ type RevenueCatModule = {
   getCustomerInfo: () => Promise<unknown>;
 };
 
+type RevenueCatLoadResult = RevenueCatModule & { default?: RevenueCatModule };
+
+/**
+ * Metro/Babel can expose the native SDK as either the module itself or an
+ * object whose `default` property is the module. Normalize both shapes so the
+ * purchase path does not silently fail in a production bundle.
+ */
+export function resolveRevenueCatModule(loaded: unknown): RevenueCatModule | null {
+  if (!loaded || typeof loaded !== "object") return null;
+  const candidate = (loaded as RevenueCatLoadResult).default ?? loaded;
+  if (!candidate || typeof candidate !== "object") return null;
+  const api = candidate as RevenueCatModule;
+  return typeof api.configure === "function" && typeof api.getOfferings === "function" && typeof api.purchasePackage === "function" && typeof api.getCustomerInfo === "function"
+    ? api
+    : null;
+}
+
 let purchases: RevenueCatModule | null = null;
 
 /** Configure only with public RevenueCat keys supplied by the account owner. */
@@ -18,7 +35,9 @@ export function configureBilling(platform: "ios" | "android", apiKey: string): b
   // The production build uses react-native-purchases via Expo prebuild.
   try {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const module = require("react-native-purchases") as RevenueCatModule;
+    const loaded = require("react-native-purchases") as RevenueCatLoadResult;
+    const module = resolveRevenueCatModule(loaded);
+    if (!module) return false;
     module.configure({ apiKey });
     purchases = module;
     void platform;

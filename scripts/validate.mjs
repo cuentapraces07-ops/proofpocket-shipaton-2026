@@ -37,6 +37,7 @@ const checks = [
   [app.includes("configureBilling") && app.includes("Try sandbox purchase"), "sandbox purchase workflow"],
   [app.includes("TRACKED POTENTIAL") && app.includes("not payment confirmation"), "honest potential label"],
   [billing.includes("react-native-purchases"), "RevenueCat module"],
+  [billing.includes("resolveRevenueCatModule") && billing.includes("default"), "RevenueCat module export compatibility"],
   [draft.includes("not an entry") && draft.includes("production RevenueCat products") && draft.includes("student eligibility is not assumed"), "honest submission gates"],
   [emergent.includes("Deployment alone does not count") && emergent.includes("No bots"), "contest integrity gates"],
   [prompt.includes("not a guarantee of payment") && prompt.includes("Do not invent"), "builder prompt integrity"],

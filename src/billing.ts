@@ -30,6 +30,9 @@ let purchases: RevenueCatModule | null = null;
 
 /** Configure only with public RevenueCat keys supplied by the account owner. */
 export function configureBilling(platform: "ios" | "android", apiKey: string): boolean {
+  // A failed reconfiguration must not leave a previously configured client
+  // usable by a later purchase attempt.
+  purchases = null;
   if (!apiKey || apiKey.startsWith("REPLACE_WITH_")) return false;
   // Kept behind a guarded require so the local prototype can run without store credentials.
   // The production build uses react-native-purchases via Expo prebuild.

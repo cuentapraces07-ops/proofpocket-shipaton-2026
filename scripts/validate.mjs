@@ -2,7 +2,11 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const root = fileURLToPath(new URL("..", import.meta.url));
+// Prefer the CI workspace when available. This avoids path-separator
+// conversion issues in runners that execute the checkout through a Windows
+// compatibility layer, while still allowing the script to run from any local
+// checkout when GITHUB_WORKSPACE is absent.
+const root = process.env.GITHUB_WORKSPACE || fileURLToPath(new URL("..", import.meta.url));
 const required = ["App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
 for (const relative of required) {
   const path = join(root, relative);

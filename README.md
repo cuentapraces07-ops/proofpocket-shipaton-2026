@@ -28,7 +28,10 @@ The repository also includes a manual GitHub Actions workflow at
 `.github/workflows/android-bundle.yml`. It runs the same structural/type checks,
 generates the native Android project, and uploads an unsigned release `.aab`
 artifact for the owner to sign and submit through a developer account. It does
-not contain signing keys and it does not publish to a store.
+not contain signing keys and it does not publish to a store. The latest green
+run is [35411567529](https://github.com/cuentapraces07-ops/proofpocket-shipaton-2026/actions/runs/35411567529);
+its downloaded `app-release.aab` is 42,010,067 bytes with SHA-256
+`A39E86FAA624B70E92E28B2DE4D26F3019A62CFDD500BC72CDD2A4A1F4A8C5E3`.
 
 The dependency-free `preview/` is a browser-testable visual slice of the same workflow. Its “Capture a proof checkpoint” and “Generate report” controls were exercised locally; the resulting report explicitly says that potential value is not a payment guarantee. The mobile build also supports adding a private opportunity with validated USD input instead of relying only on seed data.
 

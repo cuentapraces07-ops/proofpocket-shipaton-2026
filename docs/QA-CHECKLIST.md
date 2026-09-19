@@ -9,6 +9,7 @@
 - [x] RevenueCat is inert with placeholder keys; no accidental purchase can start.
 - [x] Entitlement name is a single constant: `proofpocket_pro`.
 - [x] No secrets, passwords, bank details, or personal documents are stored.
+- [x] GitHub Actions Android smoke build passes and produces a reproducible unsigned `.aab`.
 
 ## Required before any external release
 

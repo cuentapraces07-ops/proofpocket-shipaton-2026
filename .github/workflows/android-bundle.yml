@@ -19,6 +19,13 @@ jobs:
         with:
           node-version: 22
 
+      - name: Set up Java for Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
       - name: Set up pnpm
         shell: bash
         run: |

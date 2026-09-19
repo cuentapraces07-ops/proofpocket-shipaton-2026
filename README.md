@@ -1,5 +1,7 @@
 # ProofPocket — Shipaton 2026 local prototype
 
+Public source repository: https://github.com/cuentapraces07-ops/proofpocket-shipaton-2026
+
 ProofPocket is a new, local-first mobile concept for independent builders: it keeps opportunity details, evidence checkpoints and payout readiness in one calm workflow. The app is intentionally separate from the existing RewardRadar web submission.
 
 ## Why this fits the opportunity

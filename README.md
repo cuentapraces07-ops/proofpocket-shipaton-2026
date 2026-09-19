@@ -35,6 +35,11 @@ its downloaded `app-release.aab` is 42,010,067 bytes with SHA-256
 
 The dependency-free `preview/` is a browser-testable visual slice of the same workflow. Its “Capture a proof checkpoint” and “Generate report” controls were exercised locally; the resulting report explicitly says that potential value is not a payment guarantee. The mobile build also supports adding a private opportunity with validated USD input instead of relying only on seed data.
 
+The local `src/solana.ts` module is a dependency-free readiness boundary for
+the CLOCK IN route: it accepts devnet only, requires explicit wallet approval,
+blocks duplicate claims and includes a deterministic mock provider. It is not a
+Solana SDK, does not create transactions and contains no wallet keys.
+
 The submission asset set now includes a 1024×1024 store icon at
 `assets/proofpocket-icon-1024.png`; it is wired into `app.json` and covered by the structural validator.
 

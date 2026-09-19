@@ -1,0 +1,9 @@
+node_modules/
+tmp-proofpocket-test/
+.expo/
+.expo-export-*/
+dist/
+output/
+video/scenes/
+video/proofpocket-demo-narration*.wav
+video/thumbnail-*.png

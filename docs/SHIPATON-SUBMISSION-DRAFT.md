@@ -47,6 +47,7 @@ The official 2026 rules require the first public store release during the submis
 
 - [x] RevenueCat Test Store project and public sandbox keys are wired to the guarded purchase path.
 - [ ] Owner creates the production RevenueCat products and supplies production iOS/Android keys.
+- [ ] Run the manual Android bundle workflow, sign the resulting `.aab` with an owner-controlled upload key, and submit it to Google Play/Samsung Galaxy Store.
 - [ ] Owner personally completes any developer-account, identity, tax, store, or payout requirements.
 - [ ] Device QA and accessibility QA pass on the chosen platform.
 - [ ] App is newly released during the Shipaton submission period (by 30 September 2026, 11:45pm PDT) on the App Store, Google Play Store, or Samsung Galaxy Store and is accessible in the United States.

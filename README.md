@@ -24,6 +24,12 @@ The dated opportunity and payout-risk evidence is kept in
 
 The Android and iOS production bundles were also smoke-built with `pnpm exec expo export --platform android` and `pnpm exec expo export --platform ios`; Metro completed successfully after the project-owned `index.js` entrypoint was added. This verifies bundling only, not store submission or device QA.
 
+The repository also includes a manual GitHub Actions workflow at
+`.github/workflows/android-bundle.yml`. It runs the same structural/type checks,
+generates the native Android project, and uploads an unsigned release `.aab`
+artifact for the owner to sign and submit through a developer account. It does
+not contain signing keys and it does not publish to a store.
+
 The dependency-free `preview/` is a browser-testable visual slice of the same workflow. Its “Capture a proof checkpoint” and “Generate report” controls were exercised locally; the resulting report explicitly says that potential value is not a payment guarantee. The mobile build also supports adding a private opportunity with validated USD input instead of relying only on seed data.
 
 The submission asset set now includes a 1024×1024 store icon at

@@ -16,8 +16,17 @@ ProofPocket is designed to keep the record honest from the first lead to the fin
 "@
 
 $synth = [System.Speech.Synthesis.SpeechSynthesizer]::new()
-$male = $synth.GetInstalledVoices() | Where-Object { $_.VoiceInfo.Name -match "David|Mark|Guy|George|Ryan" } | Select-Object -First 1
-if ($male) { $synth.SelectVoice($male.VoiceInfo.Name) }
+$male = $synth.GetInstalledVoices() | Where-Object { $_.VoiceInfo.Name -like "*Pablo*" -or $_.VoiceInfo.Name -like "*Raul*" -or $_.VoiceInfo.Name -match "David|Mark|Guy|George|Ryan" } | Select-Object -First 1
+if ($male) {
+  $synth.SelectVoice($male.VoiceInfo.Name)
+} else {
+  # Windows can expose the voice catalog differently between host processes;
+  # keep the male-voice requirement deterministic when the named voice exists.
+  try {
+    $synth.SelectVoice("Microsoft Pablo")
+    $male = [pscustomobject]@{ VoiceInfo = [pscustomobject]@{ Name = "Microsoft Pablo" } }
+  } catch { }
+}
 $synth.Rate = 0
 $synth.Volume = 100
 $synth.SetOutputToWaveFile($output)

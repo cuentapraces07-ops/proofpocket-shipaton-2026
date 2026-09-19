@@ -57,6 +57,6 @@ The official 2026 rules require the first public store release during the submis
 
 The public demo video is 42 seconds and uses only original generated scenes and
 system narration. A more detailed local cut (`video/ProofPocket-Shipaton-demo-v0.2.0.mp4`)
-adds five scenes and runs for about 42 seconds; it remains unpublished until
-the owner reviews it. Both cuts remain prototype demonstrations until the
-owner has a real store release and reviews the final submission materials.
+adds five scenes and a clearly male neural narration; it remains unpublished
+until the owner reviews it. Both cuts remain prototype demonstrations until
+the owner has a real store release and reviews the final submission materials.

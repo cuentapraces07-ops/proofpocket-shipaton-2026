@@ -11,8 +11,9 @@
     "android": { "package": "com.proofpocket.app" },
     "extra": {
       "revenueCat": {
-        "iosApiKey": "REPLACE_WITH_REVENUECAT_IOS_PUBLIC_KEY",
-        "androidApiKey": "REPLACE_WITH_REVENUECAT_ANDROID_PUBLIC_KEY",
+        "iosApiKey": "test_YSiBPrPQkCgVnJZOeBbEznxyAxW",
+        "androidApiKey": "test_YSiBPrPQkCgVnJZOeBbEznxyAxW",
+        "mode": "sandbox",
         "entitlement": "proofpocket_pro"
       }
     }

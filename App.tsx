@@ -1,5 +1,7 @@
-import React, { useMemo, useState } from "react";
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Constants from "expo-constants";
+import React, { useEffect, useMemo, useState } from "react";
+import { Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { configureBilling, loadPremiumState, purchasePremium } from "./src/billing";
 import { buildPayoutReport, createEvidence, calculateHealth, normalizeOpportunity, parseAmountUsd, totalPotential, type EvidenceItem, type Opportunity } from "./src/domain";
 
 const seedOpportunities: Opportunity[] = [
@@ -11,6 +13,9 @@ const seedEvidence: EvidenceItem[] = [
   { id: "welcome", kind: "note", title: "Evidence-first workflow", detail: "Keep a source, decision and next action together.", createdAt: "2026-09-18T00:00:00.000Z", verified: true },
 ];
 
+const revenueCatConfig = (Constants.expoConfig?.extra as { revenueCat?: { iosApiKey?: string; androidApiKey?: string } } | undefined)?.revenueCat;
+const billingPlatform = Platform.OS === "ios" ? "ios" : "android";
+
 export default function App() {
   const [tab, setTab] = useState<"home" | "evidence" | "settings">("home");
   const [opportunities, setOpportunities] = useState(seedOpportunities);
@@ -21,8 +26,20 @@ export default function App() {
   const [draftAmount, setDraftAmount] = useState("");
   const [draftDueAt, setDraftDueAt] = useState("");
   const [formError, setFormError] = useState<string | null>(null);
+  const [billingReady, setBillingReady] = useState(false);
+  const [premiumActive, setPremiumActive] = useState(false);
+  const [billingMessage, setBillingMessage] = useState("Sandbox billing is not configured yet.");
   const potential = useMemo(() => totalPotential(opportunities), [opportunities]);
   const health = calculateHealth(opportunities[0]!, evidence);
+
+  useEffect(() => {
+    const key = billingPlatform === "ios" ? revenueCatConfig?.iosApiKey : revenueCatConfig?.androidApiKey;
+    const configured = configureBilling(billingPlatform, key ?? "");
+    setBillingReady(configured);
+    if (!configured) return;
+    setBillingMessage("RevenueCat sandbox connected. No real charge is enabled.");
+    void loadPremiumState().then((active) => setPremiumActive(active));
+  }, []);
 
   const addDemoEvidence = () => {
     const item = createEvidence("note", "Launch checklist", "Prototype validates local evidence capture and a clear paid tier.");
@@ -49,6 +66,17 @@ export default function App() {
     setDraftAmount("");
     setDraftDueAt("");
     setFormError(null);
+  };
+
+  const tryPremiumPurchase = async () => {
+    if (!billingReady) {
+      setBillingMessage("Sandbox billing is unavailable until the app is built with its native module.");
+      return;
+    }
+    setBillingMessage("Checking the RevenueCat sandbox offering...");
+    const result = await purchasePremium();
+    setPremiumActive(result.ok);
+    setBillingMessage(result.ok ? "Sandbox entitlement active; no real charge was made." : `Sandbox purchase not completed: ${result.reason ?? "unknown reason"}.`);
   };
 
   return (
@@ -83,7 +111,7 @@ export default function App() {
 
         {tab === "evidence" && <><Text style={styles.sectionTitle}>Evidence locker</Text><Text style={styles.subtitle}>Local-first notes stay on this device until you choose to export them.</Text>{evidence.map((item) => <View style={styles.evidence} key={item.id}><View style={styles.row}><Text style={styles.evidenceKind}>{item.kind.toUpperCase()}</Text><Text style={styles.muted}>{new Date(item.createdAt).toLocaleDateString()}</Text></View><Text style={styles.opportunityTitle}>{item.title}</Text><Text style={styles.muted}>{item.detail}</Text></View>)}<TouchableOpacity accessibilityRole="button" onPress={addDemoEvidence} style={styles.secondary}><Text style={styles.secondaryText}>Add checkpoint</Text></TouchableOpacity></>}
 
-        {tab === "settings" && <><Text style={styles.sectionTitle}>Premium controls</Text><View style={styles.settingsCard}><Text style={styles.opportunityTitle}>ProofPocket Pro</Text><Text style={styles.muted}>Unlimited evidence exports, encrypted backup and payout-ready reports. RevenueCat entitlement: proofpocket_pro.</Text><TouchableOpacity accessibilityRole="button" style={styles.primary}><Text style={styles.primaryText}>Preview upgrade</Text></TouchableOpacity></View><Text style={styles.muted}>Billing stays disabled until the owner supplies public store keys. No payment is initiated by this prototype.</Text></>}
+        {tab === "settings" && <><Text style={styles.sectionTitle}>Premium controls</Text><View style={styles.settingsCard}><Text style={styles.opportunityTitle}>ProofPocket Pro</Text><Text style={styles.muted}>Unlimited evidence exports, encrypted backup and payout-ready reports. RevenueCat entitlement: proofpocket_pro.</Text><TouchableOpacity accessibilityRole="button" onPress={tryPremiumPurchase} style={styles.primary}><Text style={styles.primaryText}>{premiumActive ? "Sandbox entitlement active" : "Try sandbox purchase"}</Text></TouchableOpacity><Text style={styles.muted}>{billingMessage}</Text></View><Text style={styles.muted}>RevenueCat is configured with a public test key. Store products and real billing still require owner-controlled store setup.</Text></>}
       </ScrollView>
       <View style={styles.nav}>{(["home", "evidence", "settings"] as const).map((item) => <TouchableOpacity key={item} accessibilityRole="tab" accessibilityState={{ selected: tab === item }} onPress={() => setTab(item)} style={styles.navItem}><Text style={[styles.navText, tab === item && styles.navTextActive]}>{item === "home" ? "Overview" : item === "evidence" ? "Proof" : "Pro"}</Text></TouchableOpacity>)}</View>
     </SafeAreaView>

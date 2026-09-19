@@ -9,7 +9,7 @@ ProofPocket turns scattered work evidence into a calm, private checklist that he
 1. Add an opportunity with payer, value, status and deadline.
 2. Capture a dated evidence checkpoint with a short source/detail pair.
 3. Surface a clear `Ready` versus `Review` state instead of implying a payout is guaranteed.
-4. Keep premium billing behind a RevenueCat entitlement (`proofpocket_pro`) without starting billing when keys are placeholders.
+4. Keep premium billing behind a RevenueCat entitlement (`proofpocket_pro`) using the RevenueCat Test Store sandbox; no real charge is started by the prototype.
 
 The current build also lets a user add a private opportunity directly from the
 Overview tab; malformed or non-positive amounts are rejected before they can
@@ -23,7 +23,7 @@ affect the tracked total.
 
 ## Honest launch notes
 
-The current artifact is a local prototype, not a published app and not an entry. It has no users, revenue, store listing, RevenueCat project, or production API key yet. Those facts must be updated from authoritative dashboards before any submission.
+The current artifact is a local prototype, not a published app and not an entry. It has no users, revenue, or store listing. A RevenueCat sandbox project and public test key are connected only to exercise the guarded purchase path; production products, store keys, and any financial setup remain owner-controlled.
 
 Preparation links (not a submission by themselves): public source at
 https://github.com/cuentapraces07-ops/proofpocket-shipaton-2026 and demo video at
@@ -39,13 +39,14 @@ The official 2026 rules require the first public store release during the submis
 
 0:45–1:15 — Capture a proof checkpoint and open the Proof tab; show the review/ready signal.
 
-1:15–1:40 — Open Pro; show that billing is intentionally inert until a real RevenueCat configuration exists.
+1:15–1:40 — Open Pro; show the RevenueCat Test Store sandbox purchase path and its no-charge boundary.
 
 1:40–1:55 — Explain the privacy posture and what a judge can test.
 
 ## Release gates
 
-- [ ] Owner creates RevenueCat project and supplies public iOS/Android keys.
+- [x] RevenueCat Test Store project and public sandbox keys are wired to the guarded purchase path.
+- [ ] Owner creates the production RevenueCat products and supplies production iOS/Android keys.
 - [ ] Owner personally completes any developer-account, identity, tax, store, or payout requirements.
 - [ ] Device QA and accessibility QA pass on the chosen platform.
 - [ ] App is newly released during the Shipaton submission period (by 30 September 2026, 11:45pm PDT) on the App Store, Google Play Store, or Samsung Galaxy Store and is accessible in the United States.
@@ -53,6 +54,6 @@ The official 2026 rules require the first public store release during the submis
 - [ ] Icon, 1179×2556 screenshot, public <2-minute video, English description, and store URL are real and verified.
 - [ ] Devpost submission is reviewed and explicitly submitted by the owner.
 
-The local draft video is 42 seconds and uses only original generated scenes and
-system narration. It remains a private preparation asset until the owner has a
+The public demo video is 42 seconds and uses only original generated scenes and
+system narration. It remains a prototype demonstration until the owner has a
 real store release and reviews the final submission materials.

@@ -40,6 +40,9 @@ The submission asset set now includes a 1024×1024 store icon at
 
 A 42-second demo video with an original low-register system narration is
 linked above and is also kept at `video/ProofPocket-Shipaton-demo-v0.1.0.mp4`.
+An expanded local cut with five product scenes and the same transparent
+narration is prepared at `video/ProofPocket-Shipaton-demo-v0.2.0.mp4`; it has
+not been uploaded or submitted.
 It demonstrates the prototype only; it does not claim a store release, users,
 revenue, prize eligibility, or guaranteed payment.
 

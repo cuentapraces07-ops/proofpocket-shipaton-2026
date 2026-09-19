@@ -23,10 +23,12 @@ const prompt = readFileSync(join(root, "docs/EMERGENT-BUILD-PROMPT.md"), "utf8")
 const preview = readFileSync(join(root, "preview/index.html"), "utf8");
 const previewScript = readFileSync(join(root, "preview/app.js"), "utf8");
 const demoVideo = join(root, "video/ProofPocket-Shipaton-demo-v0.1.0.mp4");
+const expandedDemoVideo = join(root, "video/ProofPocket-Shipaton-demo-v0.2.0.mp4");
 const checks = [
   [manifest.expo.android.package === "com.proofpocket.app", "Android package"],
   [manifest.expo.icon === "./assets/proofpocket-icon-1024.png" && readFileSync(join(root, "assets/proofpocket-icon-1024.png"), null).length > 0, "1024px icon asset"],
   [readFileSync(demoVideo, null).length > 100000, "demo video asset"],
+  [readFileSync(expandedDemoVideo, null).length > 100000, "expanded demo video asset"],
   [packageJson.main === "index.js" && entry.includes("registerRootComponent") && entry.includes("./App"), "Expo entrypoint"],
   [manifest.expo.extra.revenueCat.entitlement === "proofpocket_pro", "RevenueCat entitlement"],
   [manifest.expo.extra.revenueCat.mode === "sandbox" && manifest.expo.extra.revenueCat.androidApiKey.startsWith("test_"), "RevenueCat sandbox key"],

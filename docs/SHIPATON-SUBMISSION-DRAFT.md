@@ -23,7 +23,11 @@ affect the tracked total.
 
 ## Honest launch notes
 
-The current artifact is a local prototype, not a published app and not an entry. It has no users, revenue, store listing, public video, RevenueCat project, or production API key yet. Those facts must be updated from authoritative dashboards before any submission.
+The current artifact is a local prototype, not a published app and not an entry. It has no users, revenue, store listing, RevenueCat project, or production API key yet. Those facts must be updated from authoritative dashboards before any submission.
+
+Preparation links (not a submission by themselves): public source at
+https://github.com/cuentapraces07-ops/proofpocket-shipaton-2026 and demo video at
+https://vimeo.com/1228236072.
 
 The official 2026 rules require the first public store release during the submission window and a working RevenueCat purchase or RevenueCat Ads integration for the main categories. A source repository and demo-only entry is the separate Next Gen path for a qualifying active student; student eligibility is not assumed here because no qualifying academic email has been verified.
 

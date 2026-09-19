@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 // compatibility layer, while still allowing the script to run from any local
 // checkout when GITHUB_WORKSPACE is absent.
 const root = process.env.GITHUB_WORKSPACE || fileURLToPath(new URL("..", import.meta.url));
-const required = ["App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
+const required = ["LICENSE", "App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
 for (const relative of required) {
   const path = join(root, relative);
   readFileSync(path, "utf8");

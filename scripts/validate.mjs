@@ -1,26 +1,27 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = new URL("..", import.meta.url).pathname.replace(/^\/+([A-Z]:)/, "$1").replaceAll("/", "\\");
-const required = ["App.tsx", "index.js", "app.json", "package.json", "README.md", "src\\domain.ts", "src\\billing.ts", "src\\domain.test.ts", "docs\\SHIPATON-SUBMISSION-DRAFT.md", "docs\\EMERGENT-BUILDERFEST-PLAN.md", "docs\\EMERGENT-BUILD-PROMPT.md", "docs\\OPPORTUNITY-RESEARCH-2026-09-18.md", "preview\\index.html", "preview\\styles.css", "preview\\app.js", "preview\\favicon.svg"];
+const root = fileURLToPath(new URL("..", import.meta.url));
+const required = ["App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
 for (const relative of required) {
   const path = join(root, relative);
   readFileSync(path, "utf8");
 }
 const app = readFileSync(join(root, "App.tsx"), "utf8");
 const entry = readFileSync(join(root, "index.js"), "utf8");
-const billing = readFileSync(join(root, "src\\billing.ts"), "utf8");
+const billing = readFileSync(join(root, "src/billing.ts"), "utf8");
 const manifest = JSON.parse(readFileSync(join(root, "app.json"), "utf8"));
 const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
-const draft = readFileSync(join(root, "docs\\SHIPATON-SUBMISSION-DRAFT.md"), "utf8");
-const emergent = readFileSync(join(root, "docs\\EMERGENT-BUILDERFEST-PLAN.md"), "utf8");
-const prompt = readFileSync(join(root, "docs\\EMERGENT-BUILD-PROMPT.md"), "utf8");
-const preview = readFileSync(join(root, "preview\\index.html"), "utf8");
-const previewScript = readFileSync(join(root, "preview\\app.js"), "utf8");
-const demoVideo = join(root, "video\\ProofPocket-Shipaton-demo-v0.1.0.mp4");
+const draft = readFileSync(join(root, "docs/SHIPATON-SUBMISSION-DRAFT.md"), "utf8");
+const emergent = readFileSync(join(root, "docs/EMERGENT-BUILDERFEST-PLAN.md"), "utf8");
+const prompt = readFileSync(join(root, "docs/EMERGENT-BUILD-PROMPT.md"), "utf8");
+const preview = readFileSync(join(root, "preview/index.html"), "utf8");
+const previewScript = readFileSync(join(root, "preview/app.js"), "utf8");
+const demoVideo = join(root, "video/ProofPocket-Shipaton-demo-v0.1.0.mp4");
 const checks = [
   [manifest.expo.android.package === "com.proofpocket.app", "Android package"],
-  [manifest.expo.icon === "./assets/proofpocket-icon-1024.png" && readFileSync(join(root, "assets\\proofpocket-icon-1024.png"), null).length > 0, "1024px icon asset"],
+  [manifest.expo.icon === "./assets/proofpocket-icon-1024.png" && readFileSync(join(root, "assets/proofpocket-icon-1024.png"), null).length > 0, "1024px icon asset"],
   [readFileSync(demoVideo, null).length > 100000, "demo video asset"],
   [packageJson.main === "index.js" && entry.includes("registerRootComponent") && entry.includes("./App"), "Expo entrypoint"],
   [manifest.expo.extra.revenueCat.entitlement === "proofpocket_pro", "RevenueCat entitlement"],

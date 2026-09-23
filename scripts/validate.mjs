@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 // compatibility layer, while still allowing the script to run from any local
 // checkout when GITHUB_WORKSPACE is absent.
 const root = process.env.GITHUB_WORKSPACE || fileURLToPath(new URL("..", import.meta.url));
-const required = ["LICENSE", "App.tsx", "index.js", "app.json", "package.json", "README.md", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "src/solana.ts", "src/solana.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "docs/OPPORTUNITY-RESEARCH-2026-09-21.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
+const required = ["LICENSE", "App.tsx", "index.js", "app.json", "package.json", "README.md", ".github/workflows/android-bundle.yml", "src/domain.ts", "src/billing.ts", "src/domain.test.ts", "src/solana.ts", "src/solana.test.ts", "docs/ARCHITECTURE.md", "docs/DEVPOST-SUBMISSION-DRAFT.md", "docs/SHIPATON-SUBMISSION-DRAFT.md", "docs/EMERGENT-BUILDERFEST-PLAN.md", "docs/EMERGENT-BUILD-PROMPT.md", "docs/OPPORTUNITY-RESEARCH-2026-09-18.md", "docs/OPPORTUNITY-RESEARCH-2026-09-21.md", "preview/index.html", "preview/styles.css", "preview/app.js", "preview/favicon.svg"];
 for (const relative of required) {
   const path = join(root, relative);
   readFileSync(path, "utf8");
@@ -18,6 +18,7 @@ const billing = readFileSync(join(root, "src/billing.ts"), "utf8");
 const solana = readFileSync(join(root, "src/solana.ts"), "utf8");
 const manifest = JSON.parse(readFileSync(join(root, "app.json"), "utf8"));
 const packageJson = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const androidWorkflow = readFileSync(join(root, ".github", "workflows", "android-bundle.yml"), "utf8");
 const draft = readFileSync(join(root, "docs/SHIPATON-SUBMISSION-DRAFT.md"), "utf8");
 const emergent = readFileSync(join(root, "docs/EMERGENT-BUILDERFEST-PLAN.md"), "utf8");
 const prompt = readFileSync(join(root, "docs/EMERGENT-BUILD-PROMPT.md"), "utf8");
@@ -35,6 +36,7 @@ const checks = [
   [manifest.expo.extra.revenueCat.mode === "sandbox" && manifest.expo.extra.revenueCat.androidApiKey.startsWith("test_"), "RevenueCat sandbox key"],
   ["react-native-purchases" in packageJson.dependencies, "RevenueCat dependency"],
   ["expo-constants" in packageJson.dependencies, "Expo runtime config dependency"],
+  [androidWorkflow.includes("pnpm test:domain"), "CI domain test"],
   [app.includes("Capture a proof checkpoint"), "evidence action"],
   [app.includes("Add to private tracker") && app.includes("Opportunity title") && app.includes("parseAmountUsd"), "opportunity capture form"],
   [app.includes("configureBilling") && app.includes("Try sandbox purchase"), "sandbox purchase workflow"],

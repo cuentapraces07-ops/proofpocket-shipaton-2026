@@ -40,9 +40,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate source and typecheck
+      - name: Validate source, domain logic, and typecheck
         run: |
           pnpm validate
+          pnpm test:domain
           pnpm typecheck
 
       - name: Generate Android project
